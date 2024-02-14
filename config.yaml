@@ -1,4 +1,6 @@
 
 db:
-  token: iQdflsm54hP93hM1dRzJAzhj1cV92RcOokBhEizRDebSqmhxeTznPOT8DfcjAyxa0tUIyS9T9heMPHLiIeuipg==
+  token: Ja_U8eVT4bvVhKBTAJof7NNTtLXr45e9-XQZh94IyEUmE7SOM7IjfVQf2jvUO09UV9luipMFzD6NiN0nkpNmfw==
   url: http://localhost:8086
+  org: ea
+  bucket: amita
