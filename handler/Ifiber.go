@@ -10,8 +10,8 @@ type Group1Dto struct {
 }
 
 type Group2Dto struct {
-	DATALOGID string  `json:"DATALOG ID,string" validate:"required"`
-	BATTERYID string  `json:"BATTERY ID,string" validate:"required"`
+	DATALOGID string  `json:"DATALOG ID" validate:"required"`
+	BATTERYID string  `json:"BATTERY ID" validate:"required"`
 	Soc       float64 `json:"Soc,string" validate:"required"`
 	Cell1     float64 `json:"Cell_1,string" validate:"required"`
 	Cell2     float64 `json:"Cell_2,string" validate:"required"`
