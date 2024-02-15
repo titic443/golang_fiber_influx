@@ -1,9 +1,11 @@
 package main
 
 import (
+	handlers "datalog-go/handler"
 	adapter "datalog-go/ports"
 	"datalog-go/services"
 	"datalog-go/utils/logs"
+	"datalog-go/utils/validators"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
@@ -25,12 +27,11 @@ func main() {
 	client := influxdb2.NewClient(url, token)
 	amita := adapter.NewAmita(client, org, bucket)
 	g1 := services.NewGroup1(amita, measurement1)
+	h := handlers.NewHandler(g1)
 
-	err := g1.InsertDataToAmita()
-	if err != nil {
-		logs.Error(err)
-	}
-	l := fmt.Sprintf("App start on port: %v", port)
+	app.Post("/g1", validators.ValidateG1, h.InsertG1)
+
+	l := fmt.Sprintf("App start on port %v", port)
 	logs.Info(l)
 	app.Listen(port)
 }

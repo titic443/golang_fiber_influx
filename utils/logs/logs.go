@@ -18,6 +18,7 @@ func init() {
 	config.Level = zap.NewAtomicLevelAt(zapcore.DebugLevel)
 	config.EncoderConfig.TimeKey = "timestamp"
 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	config.EncoderConfig.StacktraceKey = ""
 	log, err = config.Build(zap.AddCallerSkip(1))
 
 	if err != nil {

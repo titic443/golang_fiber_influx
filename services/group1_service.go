@@ -3,6 +3,7 @@ package services
 import (
 	port "datalog-go/ports"
 	"datalog-go/utils/logs"
+	"encoding/json"
 	"fmt"
 )
 
@@ -18,7 +19,11 @@ func NewGroup1(amita port.IAmita, measurement string) group1 {
 	}
 }
 
-func (g group1) InsertDataToAmita() error {
+func (g group1) InsertDataToAmita(body interface{}) error {
+
+	b, _ := json.Marshal(body)
+
+	fmt.Println(string(b))
 
 	t := map[string]string{
 		"DATALOG ID": "L0001",
@@ -37,5 +42,6 @@ func (g group1) InsertDataToAmita() error {
 	}
 	l := fmt.Sprintf("Insert batteryId:%v datalogId:%v to measurement:%v", t["DATALOG ID"], t["BATTERY ID"], g.measurement)
 	logs.Info(l)
+
 	return nil
 }
