@@ -3,6 +3,8 @@ package handlers
 import (
 	"datalog-go/services"
 	"datalog-go/utils/logs"
+	"fmt"
+	"reflect"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -22,7 +24,7 @@ func (h handler) InsertG1(c *fiber.Ctx) error {
 	c.BodyParser(&body)
 
 	for _, b := range body {
-
+		fmt.Println(reflect.TypeOf(b.MaxVMV))
 		err := h.g1.InsertDataToAmita(b)
 		if err != nil {
 			logs.Error(err)

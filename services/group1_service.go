@@ -3,8 +3,9 @@ package services
 import (
 	port "datalog-go/ports"
 	"datalog-go/utils/logs"
-	"encoding/json"
 	"fmt"
+
+	"github.com/mitchellh/mapstructure"
 )
 
 type group1 struct {
@@ -21,19 +22,18 @@ func NewGroup1(amita port.IAmita, measurement string) group1 {
 
 func (g group1) InsertDataToAmita(body interface{}) error {
 
-	b, _ := json.Marshal(body)
-
-	fmt.Println(string(b))
+	b := Group1Dto{}
+	mapstructure.Decode(body, &b)
 
 	t := map[string]string{
-		"DATALOG ID": "L0001",
-		"BATTERY ID": "BAT0002",
+		"DATALOG ID": b.DATALOGID,
+		"BATTERY ID": b.BATTERYID,
 	}
 	f := map[string]interface{}{
-		"Total V (V)": 690,
-		"Total A (A)": -6.7,
-		"MinV (mV)":   4072,
-		"MaxV (mV)":   4126,
+		"Total V (V)": b.TotalVV,
+		"Total A (A)": b.TotalAA,
+		"MinV (mV)":   b.MinVMV,
+		"MaxV (mV)":   b.MaxVMV,
 	}
 
 	err := g.amita.Write(t, f, g.measurement)
