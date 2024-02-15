@@ -1,6 +1,9 @@
 
 db:
-  token: Ja_U8eVT4bvVhKBTAJof7NNTtLXr45e9-XQZh94IyEUmE7SOM7IjfVQf2jvUO09UV9luipMFzD6NiN0nkpNmfw==
+  token: nZLMcjUk-ooOTNaA8BpF4Cs823hlfgZg3rmaJDgV_WyFzMaz2F_AqrE73PqODpSsg9eiMzkiDgWc3K7VEwUwFw==
   url: http://localhost:8086
   org: ea
   bucket: amita
+
+app:
+  port: 8080

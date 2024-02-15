@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"strings"
@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func initConfig() {
+func InitConfig() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
@@ -20,7 +20,7 @@ func initConfig() {
 	}
 }
 
-func initTimeZone() {
+func InitTimeZone() {
 	ict, err := time.LoadLocation("Asia/Bangkok")
 	if err != nil {
 		panic(err)

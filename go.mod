@@ -5,10 +5,20 @@ go 1.21.5
 require github.com/influxdata/influxdb-client-go v1.4.0
 
 require (
+	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/gofiber/fiber/v2 v2.52.0 // indirect
+	github.com/klauspost/compress v1.17.0 // indirect
+	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/valyala/fasthttp v1.51.0 // indirect
+	github.com/valyala/tcplisten v1.0.0 // indirect
+)
+
+require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/deepmap/oapi-codegen v1.3.6 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
-	github.com/google/uuid v1.4.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/influxdata/influxdb-client-go/v2 v2.13.0 // indirect
 	github.com/influxdata/line-protocol v0.0.0-20200327222509-2487e7298839 // indirect
@@ -16,7 +26,7 @@ require (
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.19 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/oapi-codegen/runtime v1.0.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect

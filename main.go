@@ -4,17 +4,17 @@ import (
 	adapter "datalog-go/ports"
 	"datalog-go/utils/logs"
 
+	"github.com/gofiber/fiber/v2"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/spf13/viper"
-	"go.uber.org/zap"
 )
 
-var log *zap.Logger
-
 func main() {
-	initConfig()
-	initTimeZone()
+
+	app := fiber.New()
+
 	logs.Info("start app")
+	port := ":" + viper.GetString("app.port")
 	token := viper.GetString("db.token")
 	url := viper.GetString("db.url")
 	org := viper.GetString("db.org")
@@ -23,9 +23,13 @@ func main() {
 	client := influxdb2.NewClient(url, token)
 	amita := adapter.NewAmita(client, org, bucket)
 
-	err := amita.Write("measurement4")
+	err := amita.Write("measurement1")
 	if err != nil {
 		logs.Error(err)
 	}
-
+	_, err = amita.Select("measurement1")
+	if err != nil {
+		logs.Error(err)
+	}
+	app.Listen(port)
 }

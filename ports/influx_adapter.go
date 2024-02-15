@@ -2,6 +2,7 @@ package port
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -25,46 +26,46 @@ func NewAmita(client influxdb2.Client, org string, bucket string) amita {
 
 func (a amita) Write(measurement string) error {
 	writeAPI := a.client.WriteAPIBlocking(a.org, a.bucket)
-	for value := 0; value < 10; value++ {
-		tags := map[string]string{
-			"DATALOG ID": "L0001",
-			"BATTERY ID": "BAT0002",
-		}
-		fields := map[string]interface{}{
-			"Total V (V)": 690,
-			"Total A (A)": -6.7,
-			"MinV (mV)":   4072,
-			"MaxV (mV)":   4126,
-		}
-		point := write.NewPoint(measurement, tags, fields, time.Now())
-		time.Sleep(1 * time.Second)
-		fmt.Println(tags)
-		fmt.Println(fields)
-		if err := writeAPI.WritePoint(context.Background(), point); err != nil {
-			return err
-		}
+
+	tags := map[string]string{
+		"DATALOG ID": "L0001",
+		"BATTERY ID": "BAT0002",
+	}
+	fields := map[string]interface{}{
+		"Total V (V)": 690,
+		"Total A (A)": -6.7,
+		"MinV (mV)":   4072,
+		"MaxV (mV)":   4126,
+	}
+	point := write.NewPoint(measurement, tags, fields, time.Now())
+	if err := writeAPI.WritePoint(context.Background(), point); err != nil {
+		return err
 	}
 
 	return nil
 }
 
 func (a amita) Select(measurement string) (interface{}, error) {
-	var result []interface{}
+	var results []interface{}
 	queryAPI := a.client.QueryAPI(a.org)
 	query := fmt.Sprintf(`from(bucket: "%v")
 	|> range(start: -40m)
 	|> filter(fn: (r) => r._measurement == "%v")`, a.bucket, measurement)
 
-	results, err := queryAPI.Query(context.Background(), query)
+	r, err := queryAPI.Query(context.Background(), query)
 	if err != nil {
 		return nil, err
 	}
-	for results.Next() {
-		result = append(result, results.Record())
+	for r.Next() {
+		a := AmitaDto{}
+		_ = a
+		o := r.Record().Values()
+		j, _ := json.Marshal(o)
+		// json.Unmarshal(j, &a)
+		results = append(results, string(j))
 	}
-	if err := results.Err(); err != nil {
+	if err := r.Err(); err != nil {
 		return nil, err
 	}
-
-	return result, nil
+	return results, nil
 }

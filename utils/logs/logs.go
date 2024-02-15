@@ -1,20 +1,23 @@
 package logs
 
 import (
+	"datalog-go/utils"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
 var log *zap.Logger
+var err error
 
 func init() {
-	var err error
+	utils.InitConfig()
+	utils.InitTimeZone()
 
 	config := zap.NewProductionConfig()
 	config.Level = zap.NewAtomicLevelAt(zapcore.DebugLevel)
 	config.EncoderConfig.TimeKey = "timestamp"
 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-
 	log, err = config.Build(zap.AddCallerSkip(1))
 
 	if err != nil {
@@ -26,8 +29,11 @@ func Info(msg string, fields ...zapcore.Field) {
 	log.Info(msg, fields...)
 }
 
-func Debug(msg string, fields ...zapcore.Field) {
-	log.Debug(msg, fields...)
+func Debug(msg interface{}, fields ...zapcore.Field) {
+	switch v := msg.(type) {
+	case string:
+		log.Debug(v, fields...)
+	}
 }
 
 func Error(msg interface{}, fields ...zapcore.Field) {
