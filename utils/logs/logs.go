@@ -25,8 +25,11 @@ func init() {
 	}
 }
 
-func Info(msg string, fields ...zapcore.Field) {
-	log.Info(msg, fields...)
+func Info(msg interface{}, fields ...zapcore.Field) {
+	switch v := msg.(type) {
+	case string:
+		log.Info(v, fields...)
+	}
 }
 
 func Debug(msg interface{}, fields ...zapcore.Field) {
