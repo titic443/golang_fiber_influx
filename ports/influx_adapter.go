@@ -6,39 +6,35 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/influxdata/influxdb-client-go/api/write"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
-	"github.com/influxdata/influxdb-client-go/v2/api/write"
 )
 
 type amita struct {
-	client influxdb2.Client
-	org    string
-	bucket string
+	client      influxdb2.Client
+	org         string
+	bucket      string
+	measurement string
 }
 
-func NewAmita(client influxdb2.Client, org string, bucket string) amita {
+func NewAmita(client influxdb2.Client, org string, bucket string, measurement string) amita {
 	return amita{
-		client: client,
-		org:    org,
-		bucket: bucket,
+		client:      client,
+		org:         org,
+		bucket:      bucket,
+		measurement: measurement,
 	}
 }
 
-func (a amita) Write(measurement string) error {
+func (a amita) Write(tags map[string]string, fields map[string]interface{}) error {
+	fmt.Println(tags)
+	fmt.Println(fields)
 	writeAPI := a.client.WriteAPIBlocking(a.org, a.bucket)
 
-	tags := map[string]string{
-		"DATALOG ID": "L0001",
-		"BATTERY ID": "BAT0002",
-	}
-	fields := map[string]interface{}{
-		"Total V (V)": 690,
-		"Total A (A)": -6.7,
-		"MinV (mV)":   4072,
-		"MaxV (mV)":   4126,
-	}
-	point := write.NewPoint(measurement, tags, fields, time.Now())
-	if err := writeAPI.WritePoint(context.Background(), point); err != nil {
+	point := write.NewPoint(a.measurement, tags, fields, time.Now())
+	_ = point
+	err := writeAPI.WritePoint(context.Background(), point)
+	if err != nil {
 		return err
 	}
 
@@ -50,7 +46,7 @@ func (a amita) Select(measurement string) (interface{}, error) {
 	queryAPI := a.client.QueryAPI(a.org)
 	query := fmt.Sprintf(`from(bucket: "%v")
 	|> range(start: -40m)
-	|> filter(fn: (r) => r._measurement == "%v")`, a.bucket, measurement)
+	|> filter(fn: (r) => r._measurement == "%v")`, a.bucket, a.measurement)
 
 	r, err := queryAPI.Query(context.Background(), query)
 	if err != nil {

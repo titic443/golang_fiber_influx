@@ -4,6 +4,11 @@ db:
   url: http://localhost:8086
   org: ea
   bucket: amita
+  measurement1: group1
+  measurement2: group2
+  measurement3: group3
+  measurement4: group4
+  measurement5: group5
 
 app:
   port: 8080

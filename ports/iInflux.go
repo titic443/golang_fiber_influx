@@ -1,7 +1,7 @@
 package port
 
 type IAmita interface {
-	Write(string) error
+	Write(map[string]string, map[string]interface{}) error
 	Select()
 }
 

@@ -19,11 +19,21 @@ func main() {
 	url := viper.GetString("db.url")
 	org := viper.GetString("db.org")
 	bucket := viper.GetString("db.bucket")
+	measurement1 := viper.GetString("db.measurement1")
 
 	client := influxdb2.NewClient(url, token)
-	amita := adapter.NewAmita(client, org, bucket)
-
-	err := amita.Write("measurement1")
+	amita := adapter.NewAmita(client, org, bucket, measurement1)
+	t := map[string]string{
+		"DATALOG ID": "L0001",
+		"BATTERY ID": "BAT0002",
+	}
+	f := map[string]interface{}{
+		"Total V (V)": 690,
+		"Total A (A)": -6.7,
+		"MinV (mV)":   4072,
+		"MaxV (mV)":   4126,
+	}
+	err := amita.Write(t, f)
 	if err != nil {
 		logs.Error(err)
 	}
