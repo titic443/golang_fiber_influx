@@ -3,9 +3,10 @@ package services
 import (
 	port "datalog-go/ports"
 	"datalog-go/utils/logs"
+	"encoding/json"
 	"fmt"
-
-	"github.com/mitchellh/mapstructure"
+	"reflect"
+	"strconv"
 )
 
 type group1 struct {
@@ -21,22 +22,36 @@ func NewGroup1(amita port.IAmita, measurement string) group1 {
 }
 
 func (g group1) InsertDataToAmita(body interface{}) error {
-
-	b := Group1Dto{}
-	mapstructure.Decode(body, &b)
-
-	t := map[string]string{
-		"DATALOG ID": b.DATALOGID,
-		"BATTERY ID": b.BATTERYID,
+	var m map[string]any
+	t := make(map[string]string)
+	f := make(map[string]interface{})
+	j, err := json.Marshal(body)
+	if err != nil {
+		return err
 	}
-	f := map[string]interface{}{
-		"Total V (V)": b.TotalVV,
-		"Total A (A)": b.TotalAA,
-		"MinV (mV)":   b.MinVMV,
-		"MaxV (mV)":   b.MaxVMV,
-	}
+	json.Unmarshal(j, &m)
+	fmt.Println(body)
+	for k, ms := range m {
+		switch k {
+		case "DATALOG ID":
+			t[k] = ms.(string)
+		case "BATTERY ID":
+			t[k] = ms.(string)
+		default:
+			if v, ok := ms.(string); ok {
+				if fVal, err := strconv.ParseFloat(v, 64); err == nil {
+					f[k] = fVal
+				} else {
+					f[k] = ms
+				}
+			} else {
+				f[k] = ms
+			}
 
-	err := g.amita.Write(t, f, g.measurement)
+		}
+	}
+	fmt.Println(reflect.TypeOf(f["Total A (A)"]))
+	err = g.amita.Write(t, f, g.measurement)
 	if err != nil {
 		return err
 	}

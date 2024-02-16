@@ -17,7 +17,6 @@ func ValidateG1(c *fiber.Ctx) error {
 
 	if len(body) > 0 {
 		for _, b := range body {
-			fmt.Println(b)
 			err := Validator.Struct(b)
 			if err != nil {
 				for _, err := range err.(validator.ValidationErrors) {

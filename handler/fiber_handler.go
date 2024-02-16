@@ -32,3 +32,17 @@ func (h handler) InsertG1(c *fiber.Ctx) error {
 	}
 	return nil
 }
+
+func (h handler) InsertG2(c *fiber.Ctx) error {
+	body := []Group2Dto{}
+	c.BodyParser(&body)
+
+	for _, b := range body {
+		err := h.g2.InsertDataToAmita(b)
+		if err != nil {
+			logs.Error(err)
+			return c.Status(fiber.ErrInternalServerError.Code).JSON(err)
+		}
+	}
+	return nil
+}

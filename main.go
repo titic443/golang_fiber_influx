@@ -32,7 +32,7 @@ func main() {
 	h := handlers.NewHandler(g1, g2)
 
 	app.Post("/g1", validators.ValidateG1, h.InsertG1)
-	app.Post("/g2", validators.ValidateG2, h.InsertG1)
+	app.Post("/g2", validators.ValidateG2, h.InsertG2)
 
 	l := fmt.Sprintf("App start on port %v", port)
 	logs.Info(l)
