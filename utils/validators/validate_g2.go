@@ -1,8 +1,8 @@
 package validators
 
 import (
+	"datalog-go/utils/logs"
 	"encoding/json"
-	"fmt"
 )
 
 type Group2Dto struct {
@@ -395,12 +395,17 @@ type Group2Dto struct {
 	NewBLM24  float64 `json:"New_BL_M24,string" `
 }
 
-func (g *Group2Dto) MapType(b []byte) []Group2Dto {
+func (g *Group2Dto) MapType(b []byte) []interface{} {
 	var tmp []Group2Dto
+	var con []interface{}
+	err := json.Unmarshal(b, &tmp)
+	if err != nil {
+		logs.Error(err)
+		return nil
+	}
 
-	fmt.Println(b)
-	json.Unmarshal(b, &tmp)
-	fmt.Println(len(tmp))
-
-	return tmp
+	for _, t := range tmp {
+		con = append(con, t)
+	}
+	return con
 }

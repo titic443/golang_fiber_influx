@@ -1,7 +1,7 @@
 package validators
 
 import (
-	"fmt"
+	"datalog-go/utils/logs"
 
 	"github.com/go-playground/validator"
 	"github.com/gofiber/fiber/v2"
@@ -15,11 +15,15 @@ func (v *ValidateBody) ValidateBody(b IValidateBody) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
 		body := b.MapType(c.Body())
+		if body == nil {
+			return c.SendStatus(fiber.ErrBadRequest.Code)
+		}
 		for _, b := range body {
 			if err := Validator.Struct(b); err != nil {
-				fmt.Println(err)
+				logs.Error(err)
 			}
 		}
+		logs.Info("Validate success")
 		return c.Next()
 	}
 }

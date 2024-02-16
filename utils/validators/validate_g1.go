@@ -1,8 +1,8 @@
 package validators
 
 import (
+	"datalog-go/utils/logs"
 	"encoding/json"
-	"fmt"
 )
 
 type Group1Dto struct {
@@ -17,9 +17,13 @@ type Group1Dto struct {
 func (g *Group1Dto) MapType(b []byte) []interface{} {
 	var tmp []Group1Dto
 	var con []interface{}
-	fmt.Println(b)
-	json.Unmarshal(b, &tmp)
-	fmt.Println(len(tmp))
+
+	err := json.Unmarshal(b, &tmp)
+	if err != nil {
+		logs.Error(err)
+		return nil
+	}
+
 	for _, item := range tmp {
 		con = append(con, item)
 	}
