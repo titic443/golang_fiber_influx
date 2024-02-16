@@ -3,6 +3,7 @@ package handlers
 import (
 	"datalog-go/services"
 	"datalog-go/utils/logs"
+	"datalog-go/utils/validators"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -20,7 +21,7 @@ func NewHandler(g1 services.IGroup1, g2 services.IGroup2) handler {
 }
 
 func (h handler) InsertG1(c *fiber.Ctx) error {
-	body := []Group1Dto{}
+	body := []validators.Group1Dto{}
 	c.BodyParser(&body)
 
 	for _, b := range body {
@@ -34,7 +35,7 @@ func (h handler) InsertG1(c *fiber.Ctx) error {
 }
 
 func (h handler) InsertG2(c *fiber.Ctx) error {
-	body := []Group2Dto{}
+	body := []validators.Group2Dto{}
 	c.BodyParser(&body)
 
 	for _, b := range body {

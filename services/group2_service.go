@@ -6,8 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
-
-	"github.com/mitchellh/mapstructure"
+	"strconv"
 )
 
 type group2 struct {
@@ -26,16 +25,12 @@ func (g group2) InsertDataToAmita(body interface{}) error {
 	var m map[string]string
 	t := make(map[string]string)
 	f := make(map[string]interface{})
-	i := Group2Dto{}
-	mapstructure.Decode(body, &i)
 
 	j, err := json.Marshal(body)
 	if err != nil {
 		return err
 	}
 	json.Unmarshal(j, &m)
-	fmt.Println("========")
-	fmt.Println(m)
 
 	for k, ms := range m {
 		switch k {
@@ -44,7 +39,11 @@ func (g group2) InsertDataToAmita(body interface{}) error {
 		case "BATTERY ID":
 			t[k] = ms
 		default:
-			f[k] = ms
+			if fl, err := strconv.ParseFloat(ms, 64); err != nil {
+				return err
+			} else {
+				f[k] = fl
+			}
 		}
 	}
 

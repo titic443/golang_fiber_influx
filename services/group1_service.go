@@ -5,7 +5,6 @@ import (
 	"datalog-go/utils/logs"
 	"encoding/json"
 	"fmt"
-	"reflect"
 	"strconv"
 )
 
@@ -45,7 +44,6 @@ func (g group1) InsertDataToAmita(body interface{}) error {
 			f[k] = fl
 		}
 	}
-	fmt.Println(reflect.TypeOf(f["Total A (A)"]))
 	err = g.amita.Write(t, f, g.measurement)
 	if err != nil {
 		return err

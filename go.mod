@@ -25,6 +25,7 @@ require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/deepmap/oapi-codegen v1.3.6 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
+	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/google/uuid v1.5.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/influxdata/influxdb-client-go/v2 v2.13.0
