@@ -38,16 +38,11 @@ func (g group1) InsertDataToAmita(body interface{}) error {
 		case "BATTERY ID":
 			t[k] = ms.(string)
 		default:
-			if v, ok := ms.(string); ok {
-				if fVal, err := strconv.ParseFloat(v, 64); err == nil {
-					f[k] = fVal
-				} else {
-					f[k] = ms
-				}
-			} else {
-				f[k] = ms
+			fl, err := strconv.ParseFloat(ms.(string), 64)
+			if err != nil {
+				return err
 			}
-
+			f[k] = fl
 		}
 	}
 	fmt.Println(reflect.TypeOf(f["Total A (A)"]))
