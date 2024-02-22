@@ -20,4 +20,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/datalog-go:latest
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/datalog-go:${{ github.sha }}
