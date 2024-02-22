@@ -28,7 +28,7 @@ jobs:
       - name: Build and Push
         id: build
         uses: docker/build-push-action@v2
-        continue-on-error: true
+        continue-on-error: false
         with:
           context: .
           file: ./Dockerfile
