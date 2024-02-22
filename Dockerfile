@@ -1,4 +1,5 @@
 FROM golang:alpine AS builder
+ARG VERSION=dev
 WORKDIR /app
 COPY . .
 RUN go build -o main ./main.go
