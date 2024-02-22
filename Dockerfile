@@ -2,7 +2,7 @@ FROM golang:alpine AS builder
 
 WORKDIR /app
 COPY . .
-RUN go build -o main ./cmd/etax/main.go
+RUN go build -o main ./main.go
 # RUN go get
 
 FROM alpine:3.18
