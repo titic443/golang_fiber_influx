@@ -17,11 +17,11 @@ type Group1Dto struct {
 func (g *Group1Dto) MapType(b []byte) []interface{} {
 	var tmp []Group1Dto
 	var con []interface{}
-
 	err := json.Unmarshal(b, &tmp)
 	if err != nil {
 		logs.Error(err)
-		return nil
+		logs.Info("convert to default value")
+		// return nil
 	}
 
 	for _, item := range tmp {

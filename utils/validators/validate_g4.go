@@ -25,7 +25,8 @@ func (g *Group4Dto) MapType(b []byte) []interface{} {
 	err := json.Unmarshal(b, &tmp)
 	if err != nil {
 		logs.Error(err)
-		return nil
+		logs.Info("convert to default value")
+		// return nil
 	}
 	for _, t := range tmp {
 		con = append(con, t)
