@@ -92,7 +92,7 @@ func (h handler) InsertG5(c *fiber.Ctx) error {
 	c.BodyParser(&body)
 
 	for _, b := range body {
-		err := h.g4.InsertDataToAmita(b)
+		err := h.g5.InsertDataToAmita(b)
 		if err != nil {
 			logs.Error(err)
 			return c.Status(fiber.ErrInternalServerError.Code).JSON(err)

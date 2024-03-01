@@ -1,9 +1,9 @@
 
 db:
-  token: UrL-bDp4r3fyANGxY_d-EycOosVVekfcLUbNyvjbDv2f4GG8MD8PUHU14KAf0DjR-0omiDHABAkdlrDZOZF9hg==
-  url: http://localhost:8086
-  org: ea
-  bucket: amita
+  token: w5UzZyYrcDztOtVZroRtHdpRPn4ItAKh7yUJ30mmkG6eFJIkFWuN3s4ppIjX4RhGHGf3lO2Ihyk-w8guTJ5yTA==
+  url: http://192.168.242.152:8086
+  org: amt
+  bucket: datalogger
   measurement1: group1
   measurement2: group2
   measurement3: group3

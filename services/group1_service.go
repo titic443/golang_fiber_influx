@@ -29,7 +29,7 @@ func (g group1) InsertDataToAmita(body interface{}) error {
 		return err
 	}
 	json.Unmarshal(j, &m)
-	fmt.Println(body)
+	// fmt.Println(body)
 	for k, ms := range m {
 		switch k {
 		case "DATALOG ID":

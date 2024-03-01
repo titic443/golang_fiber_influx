@@ -3,7 +3,6 @@ package validators
 import (
 	"datalog-go/utils/logs"
 	"encoding/json"
-	"fmt"
 )
 
 type Group2Dto struct {
@@ -399,7 +398,7 @@ type Group2Dto struct {
 func (g *Group2Dto) MapType(b []byte) []interface{} {
 	tmp := []Group2Dto{{}}
 	var con []interface{}
-	fmt.Println(tmp)
+	// fmt.Println(tmp)
 	err := json.Unmarshal(b, &tmp)
 	if err != nil {
 		logs.Error(err)
