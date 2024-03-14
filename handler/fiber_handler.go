@@ -27,10 +27,11 @@ func NewHandler(g1 services.IGroup1, g2 services.IGroup2, g3 services.IGroup3, g
 }
 
 func (h handler) InsertG1(c *fiber.Ctx) error {
+	validateBody := c.Locals("validateBody").([]interface{})
 	body := []validators.Group1Dto{}
 	c.BodyParser(&body)
 
-	for _, b := range body {
+	for _, b := range validateBody {
 		err := h.g1.InsertDataToAmita(b)
 		if err != nil {
 			logs.Error(err)
@@ -41,12 +42,13 @@ func (h handler) InsertG1(c *fiber.Ctx) error {
 }
 
 func (h handler) InsertG2(c *fiber.Ctx) error {
+	validateBody := c.Locals("validateBody").([]interface{})
 	body := []validators.Group2Dto{}
 	err := c.BodyParser(&body)
 	if err != nil {
 		logs.Error(err)
 	}
-	for _, b := range body {
+	for _, b := range validateBody {
 		err := h.g2.InsertDataToAmita(b)
 		if err != nil {
 			logs.Error(err)
@@ -57,11 +59,11 @@ func (h handler) InsertG2(c *fiber.Ctx) error {
 }
 
 func (h handler) InsertG3(c *fiber.Ctx) error {
-
+	validateBody := c.Locals("validateBody").([]interface{})
 	body := []validators.Group3Dto{}
 	c.BodyParser(&body)
 
-	for _, b := range body {
+	for _, b := range validateBody {
 		err := h.g3.InsertDataToAmita(b)
 		if err != nil {
 			logs.Error(err)
@@ -72,11 +74,11 @@ func (h handler) InsertG3(c *fiber.Ctx) error {
 }
 
 func (h handler) InsertG4(c *fiber.Ctx) error {
-
+	validateBody := c.Locals("validateBody").([]interface{})
 	body := []validators.Group4Dto{}
 	c.BodyParser(&body)
 
-	for _, b := range body {
+	for _, b := range validateBody {
 		err := h.g4.InsertDataToAmita(b)
 		if err != nil {
 			logs.Error(err)
@@ -87,11 +89,11 @@ func (h handler) InsertG4(c *fiber.Ctx) error {
 }
 
 func (h handler) InsertG5(c *fiber.Ctx) error {
-
+	validateBody := c.Locals("validateBody").([]interface{})
 	body := []validators.Group5Dto{}
 	c.BodyParser(&body)
 
-	for _, b := range body {
+	for _, b := range validateBody {
 		err := h.g5.InsertDataToAmita(b)
 		if err != nil {
 			logs.Error(err)

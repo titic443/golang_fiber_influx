@@ -24,6 +24,7 @@ func (v *ValidateBody) ValidateBody(b IValidateBody) fiber.Handler {
 			}
 		}
 		logs.Info("Validate success")
+		c.Locals("validateBody", body)
 		return c.Next()
 	}
 }

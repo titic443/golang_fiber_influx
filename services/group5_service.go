@@ -5,7 +5,6 @@ import (
 	"datalog-go/utils/logs"
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
 type group5 struct {
@@ -21,7 +20,7 @@ func NewGroup5(amita port.IAmita, measurement string) group5 {
 }
 
 func (g group5) InsertDataToAmita(body interface{}) error {
-	var m map[string]string
+	var m map[string]any
 	t := make(map[string]string)
 	f := make(map[string]interface{})
 
@@ -34,15 +33,12 @@ func (g group5) InsertDataToAmita(body interface{}) error {
 	for k, ms := range m {
 		switch k {
 		case "DATALOG ID":
-			t[k] = ms
+			t[k] = ms.(string)
 		case "BATTERY ID":
-			t[k] = ms
+			t[k] = ms.(string)
 		default:
-			if fl, err := strconv.ParseFloat(ms, 64); err != nil {
-				return err
-			} else {
-				f[k] = fl
-			}
+
+			f[k] = ms
 		}
 	}
 

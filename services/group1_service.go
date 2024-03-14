@@ -5,7 +5,6 @@ import (
 	"datalog-go/utils/logs"
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
 type group1 struct {
@@ -37,11 +36,8 @@ func (g group1) InsertDataToAmita(body interface{}) error {
 		case "BATTERY ID":
 			t[k] = ms.(string)
 		default:
-			fl, err := strconv.ParseFloat(ms.(string), 64)
-			if err != nil {
-				return err
-			}
-			f[k] = fl
+
+			f[k] = ms
 		}
 	}
 	err = g.amita.Write(t, f, g.measurement)
