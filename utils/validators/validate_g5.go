@@ -10,7 +10,7 @@ type Group5Dto struct {
 	DATALOGID   string  `json:"DATALOG ID"`
 	BATTERYID   string  `json:"BATTERY ID"`
 	Soh         float64 `json:"SoH"`
-	EvBmsStatus float64 `json:"EvBmsStatus"`
+	EvBmsStatus string  `json:"EvBmsStatus"`
 }
 
 func (g *Group5Dto) MapType(b []byte) []interface{} {
@@ -21,15 +21,16 @@ func (g *Group5Dto) MapType(b []byte) []interface{} {
 	if err != nil {
 		logs.Error(err)
 	}
+
 	for _, v := range m {
 		t := Group5Dto{
-			DATALOGID: v["DATALOG ID"],
-			BATTERYID: v["BATTERY ID"],
+			DATALOGID:   v["DATALOG ID"],
+			BATTERYID:   v["BATTERY ID"],
+			EvBmsStatus: v["EvBmsStatus"],
 		}
 
 		for k, vv := range v {
-			if k != "DATALOG ID" && k != "BATTERY ID" {
-
+			if k != "DATALOG ID" && k != "BATTERY ID" && k != "EvBmsStatus" {
 				f, err := strconv.ParseFloat(vv, 64)
 				if err != nil {
 					metric[k] = 0
@@ -42,9 +43,9 @@ func (g *Group5Dto) MapType(b []byte) []interface{} {
 		if err != nil {
 			logs.Error(err)
 		}
+
 		json.Unmarshal(b, &t)
 		con = append(con, t)
-
 	}
 
 	return con

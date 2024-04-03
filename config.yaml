@@ -9,6 +9,7 @@ db:
   measurement3: group3
   measurement4: group4
   measurement5: group5
+  measurement6: group6
 
 app:
   port: 8080

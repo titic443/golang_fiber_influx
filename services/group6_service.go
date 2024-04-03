@@ -5,22 +5,24 @@ import (
 	"datalog-go/utils/logs"
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
-type group5 struct {
+type group6 struct {
 	amita       port.IAmita
 	measurement string
 }
 
-func NewGroup5(amita port.IAmita, measurement string) group5 {
-	return group5{
+func NewGroup6(amita port.IAmita, measurement string) group6 {
+	return group6{
 		amita:       amita,
 		measurement: measurement,
 	}
 }
 
-func (g group5) InsertDataToAmita(body interface{}) error {
+func (g group6) InsertDataToAmita(body interface{}) error {
 	var m map[string]any
+	filter := []string{"DATALOG ID", "BATTERY ID", "EvBmsStatus", "date", "ts", "Fault1", "Fault2", "Fault3", "Fault4", "Fault5", "Fault6", "Fault7", "Fault8", "RelayState"}
 	t := make(map[string]string)
 	f := make(map[string]interface{})
 
@@ -31,19 +33,21 @@ func (g group5) InsertDataToAmita(body interface{}) error {
 	json.Unmarshal(j, &m)
 
 	for k, ms := range m {
-		switch k {
-		case "DATALOG ID":
+		checkString := slices.Contains(filter, k)
+		switch checkString {
+		case true:
 			t[k] = ms.(string)
-		case "BATTERY ID":
-			t[k] = ms.(string)
-		case "EvBmsStatus":
-			t[k] = ms.(string)
+		// case "DATALOG ID":
+		// 	t[k] = ms.(string)
+		// case "BATTERY ID":
+		// 	t[k] = ms.(string)
+		// case "EvBmsStatus":
+		// 	t[k] = ms.(string)
 		default:
 
 			f[k] = ms
 		}
 	}
-
 	// fmt.Println(reflect.TypeOf(f["Soc"]))
 	err = g.amita.Write(t, f, g.measurement)
 	if err != nil {

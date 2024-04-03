@@ -22,7 +22,8 @@ func main() {
 	vg2 := &validators.Group2Dto{}
 	vg3 := &validators.Group3Dto{}
 	vg4 := &validators.Group4Dto{}
-	vg5 := &validators.Group4Dto{}
+	vg5 := &validators.Group5Dto{}
+	vg6 := &validators.Group6Dto{}
 
 	port := ":" + viper.GetString("app.port")
 	token := viper.GetString("db.token")
@@ -34,6 +35,7 @@ func main() {
 	measurement3 := viper.GetString("db.measurement3")
 	measurement4 := viper.GetString("db.measurement4")
 	measurement5 := viper.GetString("db.measurement5")
+	measurement6 := viper.GetString("db.measurement6")
 
 	client := influxdb2.NewClient(url, token)
 	amita := adapter.NewAmita(client, org, bucket)
@@ -41,14 +43,16 @@ func main() {
 	g2 := services.NewGroup2(amita, measurement2)
 	g3 := services.NewGroup3(amita, measurement3)
 	g4 := services.NewGroup4(amita, measurement4)
-	g5 := services.NewGroup4(amita, measurement5)
-	h := handlers.NewHandler(g1, g2, g3, g4, g5)
+	g5 := services.NewGroup5(amita, measurement5)
+	g6 := services.NewGroup6(amita, measurement6)
+	h := handlers.NewHandler(g1, g2, g3, g4, g5, g6)
 
 	app.Post("/g1", v.ValidateBody(vg1), h.InsertG1)
 	app.Post("/g2", v.ValidateBody(vg2), h.InsertG2)
 	app.Post("/g3", v.ValidateBody(vg3), h.InsertG3)
 	app.Post("/g4", v.ValidateBody(vg4), h.InsertG4)
 	app.Post("/g5", v.ValidateBody(vg5), h.InsertG5)
+	app.Post("/g6", v.ValidateBody(vg6), h.InsertG6)
 
 	l := fmt.Sprintf("App start on port %v", port)
 	logs.Info(l)

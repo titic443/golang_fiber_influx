@@ -3,7 +3,6 @@ package validators
 import (
 	"datalog-go/utils/logs"
 	"encoding/json"
-	"fmt"
 	"strconv"
 )
 
@@ -74,8 +73,6 @@ func (g *Group3Dto) MapType(b []byte) []interface{} {
 			DATALOGID: v["DATALOG ID"],
 			BATTERYID: v["BATTERY ID"],
 		}
-		fmt.Println(v)
-		fmt.Println("-----")
 		for k, vv := range v {
 			if k != "DATALOG ID" && k != "BATTERY ID" {
 
@@ -86,7 +83,6 @@ func (g *Group3Dto) MapType(b []byte) []interface{} {
 				metric[k] = f
 			}
 		}
-		fmt.Println(metric)
 
 		b, err := json.Marshal(metric)
 		if err != nil {
@@ -94,7 +90,6 @@ func (g *Group3Dto) MapType(b []byte) []interface{} {
 		}
 		json.Unmarshal(b, &t)
 		con = append(con, t)
-		fmt.Println(con...)
 	}
 
 	return con
