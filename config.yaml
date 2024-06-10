@@ -1,8 +1,7 @@
-
 db:
-  token: w5UzZyYrcDztOtVZroRtHdpRPn4ItAKh7yUJ30mmkG6eFJIkFWuN3s4ppIjX4RhGHGf3lO2Ihyk-w8guTJ5yTA==
-  url: http://192.168.242.152:8086
-  org: amt
+  token:
+  url:
+  org:
   bucket: datalogger
   measurement1: group1
   measurement2: group2
